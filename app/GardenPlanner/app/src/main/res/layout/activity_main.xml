@@ -31,4 +31,5 @@
         android:layout_below="@+id/logo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="54dp" />
+
 </RelativeLayout>

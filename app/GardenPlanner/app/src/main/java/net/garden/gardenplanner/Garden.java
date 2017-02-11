@@ -12,14 +12,17 @@ public class Garden {
     private int width;
     private boolean isPotted;
     private int numPots = 0;
+    private int pH;
 
     private ArrayList<Plant> plants;
 
-    public Garden(boolean isIndoor, int length, int width, boolean isPotted) {
+    public Garden(boolean isIndoor, int length, int width, boolean isPotted, int numPot, int pH) {
         this.isIndoor = isIndoor;
         this.length = length;
         this.width = width;
         this.isPotted = isPotted;
+        this.numPots = numPot;
+        this.pH = pH;
 
         plants = new ArrayList<>();
     }

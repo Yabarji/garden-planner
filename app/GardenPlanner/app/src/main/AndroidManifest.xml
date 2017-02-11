@@ -18,7 +18,9 @@
         <activity
             android:name=".PreferenceSelectorActivity"
             android:label="@string/title_activity_preference_selector"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".PlantSelectorActivity" />
+        <activity android:name=".ResultActivity"></activity>
     </application>
 
 </manifest>

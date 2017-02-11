@@ -1,5 +1,10 @@
 package net.garden.gardenplanner;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -8,15 +13,28 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Switch;
+
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 public class PreferenceSelectorActivity extends AppCompatActivity {
 
+    private static final String TAG = "PreferenceActivity";
 
+    public static Garden mGarden;
+    public Plant[] list;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -73,57 +91,6 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            //View rootView = inflater.inflate(R.layout.fragment_preference_selector, container, false);
-
-            int section = getArguments().getInt(ARG_SECTION_NUMBER);
-
-            int layout = R.layout.setup_selector;
-            switch (section) {
-                case 0:
-                    layout = R.layout.setup_selector;
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                default:
-                    layout = R.layout.setup_selector;
-                    break;
-            }
-
-
-            return inflater.inflate(layout, container, false);
-        }
-    }
-
-    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
@@ -137,13 +104,22 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            Log.v(TAG, "Position: " + position);
+
+            switch (position) {
+                case 0:
+                    return LayoutSetupFragment.newInstance();
+                case 1:
+                    return PlantSelectorFragment.newInstance();
+            }
+
+            return LayoutSetupFragment.newInstance();
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -153,10 +129,260 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
                     return "SECTION 1";
                 case 1:
                     return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
             }
             return null;
         }
     }
+
+    public ViewPager getmViewPager(){
+        return mViewPager;
+    }
+
+    public static class LayoutSetupFragment extends Fragment {
+
+        private Switch switchIndoor;
+        private EditText editLength;
+        private EditText editWidth;
+        private Switch switchPotted;
+        private EditText editPots;
+        private EditText editPH;
+        private Button btnNext;
+
+        public LayoutSetupFragment() {
+            // Required empty public constructor
+        }
+
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @return A new instance of fragment LayoutSetupFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        public static LayoutSetupFragment newInstance() {
+            LayoutSetupFragment fragment = new LayoutSetupFragment();
+            Bundle args = new Bundle();
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            // Inflate the layout for this fragment
+
+            View view = inflater.inflate(R.layout.fragment_layout_setup, container, false);
+
+            switchIndoor = (Switch) view.findViewById(R.id.switchIndoor);
+            editLength = (EditText) view.findViewById(R.id.length);
+            editWidth = (EditText) view.findViewById(R.id.width);
+            switchPotted = (Switch) view.findViewById(R.id.switchPotted);
+            editPots = (EditText) view.findViewById(R.id.numPots);
+            editPH = (EditText) view.findViewById(R.id.pH);
+            btnNext = (Button) view.findViewById(R.id.next);
+
+            switchPotted.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(switchPotted.isChecked()){
+                        editPots.setVisibility(View.VISIBLE);
+                        editPots.requestFocus();
+                    } else{
+                        editPots.setVisibility(View.GONE);
+                    }
+                }
+            });
+
+            btnNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    boolean isIndoor = switchIndoor.isChecked();
+                    int len = Integer.valueOf(editLength.getText().toString());
+                    int wid = Integer.valueOf(editWidth.getText().toString());
+                    boolean isPot = switchPotted.isChecked();
+                    int numPot;
+                    if(isPot){
+                        numPot = Integer.valueOf(editPots.getText().toString());
+                    } else{
+                        numPot = 0;
+                    }
+                    int ph = Integer.valueOf(editPH.getText().toString());
+
+                    PreferenceSelectorActivity.mGarden = new Garden(isIndoor, len, wid, isPot, numPot, ph); //Create the garden
+
+                    ((PreferenceSelectorActivity)getActivity()).getmViewPager().setCurrentItem(1, true);
+                }
+            });
+
+            return view;
+        }
+    }
+
+    public static class PlantSelectorFragment extends Fragment {
+        private Plant[] selectedPlants;
+        private Plant[] allPlants;
+
+        private int btn1 = 1, btn2 = 2, btn3 = 3, btn4 = 4;
+
+        Button bt1;
+        Button bt2, bt3, bt4;
+
+        public PlantSelectorFragment() {
+            // Required empty public constructor
+        }
+
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @return A new instance of fragment PlantSelectorFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        public static PlantSelectorFragment newInstance() {
+            PlantSelectorFragment fragment = new PlantSelectorFragment();
+            Bundle args = new Bundle();
+            fragment.setArguments(args);
+
+            return fragment;
+        }
+
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            selectedPlants = new Plant[4];
+
+            try {
+                allPlants = getPlants();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            // Inflate the layout for this fragment
+
+            View view = inflater.inflate(R.layout.fragment_plant_selector, container, false);
+
+            bt1 = (Button) view.findViewById(R.id.plant1);
+            bt1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), PlantSelectorActivity.class);
+
+                    startActivityForResult(intent, btn1);
+                }
+            });
+
+            bt2 = (Button) view.findViewById(R.id.plant2);
+            bt2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), PlantSelectorActivity.class);
+
+                    startActivityForResult(intent, btn2);
+                }
+            });
+
+            bt3 = (Button) view.findViewById(R.id.plant3);
+            bt3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), PlantSelectorActivity.class);
+
+                    startActivityForResult(intent, btn3);
+                }
+            });
+
+            bt4 = (Button) view.findViewById(R.id.plant4);
+            bt4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), PlantSelectorActivity.class);
+
+                    startActivityForResult(intent, btn4);
+                }
+            });
+
+            return view;
+        }
+
+        private View.OnClickListener btnClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), PlantSelectorActivity.class);
+
+                int id = view.getId();
+
+                startActivityForResult(intent, id);
+            }
+        };
+
+        public Plant[] getPlants() throws IOException {
+            InputStream is = getContext().getAssets().open("plants.json");
+
+            byte[] buffer = new byte[is.available()];
+            is.read(buffer);
+            is.close();
+            String json = new String(buffer, "UTF-8");
+            Log.v(TAG, json);
+
+            Plant[] plants = new Gson().fromJson(json, Plant[].class);
+
+            for (Plant p : plants) {
+                Log.v(TAG, p.toString());
+            }
+
+            return plants;
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (requestCode == btn1) {
+                if(resultCode == Activity.RESULT_OK){
+                    int i = data.getIntExtra("result", 0);
+
+                    selectedPlants[0] = allPlants[i];
+                    bt1.setText(selectedPlants[0].getName());
+                }
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    //Write your code if there's no result
+                }
+            } else if (requestCode == btn2) {
+                if(resultCode == Activity.RESULT_OK){
+                    int i = data.getIntExtra("result", 0);
+
+                    selectedPlants[1] = allPlants[i];
+                    bt2.setText(selectedPlants[1].getName());
+
+                }
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    //Write your code if there's no result
+                }
+            } else if (requestCode == btn3) {
+                if(resultCode == Activity.RESULT_OK){
+                    int i = data.getIntExtra("result", 0);
+
+                    selectedPlants[2] = allPlants[i];
+                    bt3.setText(selectedPlants[2].getName());
+                }
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    //Write your code if there's no result
+                }
+            } else {
+                if(resultCode == Activity.RESULT_OK){
+                    int i = data.getIntExtra("result", 0);
+
+                    selectedPlants[3] = allPlants[i];
+                    bt4.setText(selectedPlants[3].getName());
+                }
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    //Write your code if there's no result
+                }
+            }
+        }
+    }
+
 }

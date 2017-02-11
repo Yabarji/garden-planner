@@ -1,0 +1,344 @@
+[
+ {
+   "name": "Chicory",
+   "area": 6,
+   "isVertical": false,
+   "pH": 6,
+   "type": "h",
+   "time": 13,
+   "yield": 1
+ },
+ {
+   "name": "Chives",
+   "area": 20,
+   "isVertical": false,
+   "pH": 6,
+   "type": "h",
+   "time": 5,
+   "yield": 1
+ },
+ {
+   "name": "Cilantro",
+   "area": 4,
+   "isVertical": false,
+   "pH": 6,
+   "type": "h",
+   "time": 4,
+   "yield": 1
+ },
+ {
+   "name": "Thyme",
+   "area": 4,
+   "isVertical": false,
+   "pH": 6,
+   "type": "h",
+   "time": 4,
+   "yield": 1
+ },
+ {
+   "name": "Dill",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "h",
+   "time": 4,
+   "yield": 1
+ },
+ {
+   "name": "Parsley",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "h",
+   "time": 4,
+   "yield": 1
+ },
+ {
+   "name": "Basil",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "h",
+   "time": 4,
+   "yield": 1
+ },
+ {
+   "name": "Oregano",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "h",
+   "time": 4,
+   "yield": 1
+ },
+ {
+   "name": "Sage",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "h",
+   "time": 4,
+   "yield": 1
+ },
+ {
+   "name": "Mint",
+   "area": 2,
+   "isVertical": false,
+   "pH": 6,
+   "type": "h",
+   "time": 4,
+   "yield": 1
+ },
+ {
+   "name": "Artichokes",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 2,
+   "yield": 2
+ },
+ {
+   "name": "Asparagus",
+   "area": 4,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 2,
+   "yield": 4
+ },
+ {
+   "name": "Beets",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "r",
+   "time": 20,
+   "yield": 1
+ },
+ {
+   "name": "Carrots",
+   "area": 8,
+   "isVertical": false,
+   "pH": 6,
+   "type": "r",
+   "time": 10,
+   "yield": 8
+ },
+ {
+   "name": "Eggplant",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 20,
+   "yield": 3
+ },
+ {
+   "name": "Fennel",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "r",
+   "time": 10,
+   "yield": 1
+ },
+ {
+   "name": "Sweet Peppers",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 12,
+   "yield": 5
+ },
+ {
+   "name": "Hot Peppers",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 10,
+   "yield": 5
+ },
+ {
+   "name": "Cherry tomato",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 5,
+   "yield": 30
+ },
+ {
+   "name": "Strawberry",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "b",
+   "time": 5,
+   "yield": 10
+ },
+ {
+   "name": "Arugula",
+   "area": 12,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 5,
+   "yield": 1
+ },
+ {
+   "name": "Collard greens",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 3,
+   "yield": 1
+ },
+ {
+   "name": "Lettuce",
+   "area": 2,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 7,
+   "yield": 2
+ },
+ {
+   "name": "Spinach",
+   "area": 4,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 7,
+   "yield": 4
+ },
+ {
+   "name": "Cress",
+   "area": 4,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 2,
+   "yield": 4
+ },
+ {
+   "name": "Swiss Chard",
+   "area": 2,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 6,
+   "yield": 2
+ },
+ {
+   "name": "Potato",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "r",
+   "time": 10,
+   "yield": 5
+ },
+ {
+   "name": "Garlic",
+   "area": 6,
+   "isVertical": false,
+   "pH": 6,
+   "type": "r",
+   "time": 7,
+   "yield": 6
+ },
+ {
+   "name": "Onion",
+   "area": 6,
+   "isVertical": false,
+   "pH": 6,
+   "type": "r",
+   "time": 16,
+   "yield": 6
+ },
+ {
+   "name": "Rosemary",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "h",
+   "time": 1,
+   "yield": 1
+ },
+ {
+   "name": "Cabbage ",
+   "area": 1,
+   "isVertical": false,
+   "pH": 6,
+   "type": "v",
+   "time": 19,
+   "yield": 1
+ },
+ {
+   "name": "Butternut Squash",
+   "area": 1,
+   "isVertical": true,
+   "pH": 6,
+   "type": "v",
+   "time": 18,
+   "yield": 1
+ },
+ {
+   "name": "Corn",
+   "area": 4,
+   "isVertical": true,
+   "pH": 6,
+   "type": "v",
+   "time": 12,
+   "yield": 8
+ },
+ {
+   "name": "Cucumbers",
+   "area": 1,
+   "isVertical": true,
+   "pH": 6,
+   "type": "v",
+   "time": 8,
+   "yield": 4
+ },
+ {
+   "name": "Heirloom tomatoes",
+   "area": 1,
+   "isVertical": true,
+   "pH": 6,
+   "type": "f",
+   "time": 8,
+   "yield": 4
+ },
+ {
+   "name": "Kumquats",
+   "area": 1,
+   "isVertical": true,
+   "pH": 6,
+   "type": "b",
+   "time": 14,
+   "yield": 35
+ },
+ {
+   "name": "Sprouts",
+   "area": 4,
+   "isVertical": true,
+   "pH": 6,
+   "type": "v",
+   "time": 3,
+   "yield": 15
+ },
+ {
+   "name": "Green beans",
+   "area": 6,
+   "isVertical": true,
+   "pH": 6,
+   "type": "v",
+   "time": 8,
+   "yield": 60
+ }
+]

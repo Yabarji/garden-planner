@@ -9,8 +9,41 @@ public class Plant {
     private String name;
     private int area;
     private String type;
-    private boolean vetical;
+    private boolean isVertical;
     private int pH;
-    private int harvestTime;
-    private int price;
+    private int time;
+    private int yield;
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getArea() {
+        return area;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public boolean isVertical() {
+        return isVertical;
+    }
+
+    public int getpH() {
+        return pH;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public int getYield() {
+        return yield;
+    }
 }
