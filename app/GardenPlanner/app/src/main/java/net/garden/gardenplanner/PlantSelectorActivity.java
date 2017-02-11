@@ -31,34 +31,12 @@ public class PlantSelectorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_selector);
 
-        try {
-            allPlants = getPlants();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        allPlants = PreferenceSelectorActivity.list;
 
         plants = (ListView) findViewById(R.id.list);
 
         plantAdapter = new PlantAdapter(this, allPlants);
         plants.setAdapter(plantAdapter);
-    }
-
-    public Plant[] getPlants() throws IOException {
-        InputStream is = this.getAssets().open("plants.json");
-
-        byte[] buffer = new byte[is.available()];
-        is.read(buffer);
-        is.close();
-        String json = new String(buffer, "UTF-8");
-        Log.v(TAG, json);
-
-        Plant[] plants = new Gson().fromJson(json, Plant[].class);
-
-        for (Plant p : plants) {
-            Log.v(TAG, p.toString());
-        }
-
-        return plants;
     }
 
     @Override

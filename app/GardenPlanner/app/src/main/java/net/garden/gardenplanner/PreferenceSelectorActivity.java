@@ -34,7 +34,7 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
     private static final String TAG = "PreferenceActivity";
 
     public static Garden mGarden;
-    public Plant[] list;
+    public static Plant[] list;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -220,7 +220,6 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
 
     public static class PlantSelectorFragment extends Fragment {
         private Plant[] selectedPlants;
-        private Plant[] allPlants;
 
         private int btn1 = 1, btn2 = 2, btn3 = 3, btn4 = 4;
 
@@ -253,7 +252,7 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
             selectedPlants = new Plant[4];
 
             try {
-                allPlants = getPlants();
+                list = getPlants();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -344,8 +343,10 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
                 if(resultCode == Activity.RESULT_OK){
                     int i = data.getIntExtra("result", 0);
 
-                    selectedPlants[0] = allPlants[i];
+                    selectedPlants[0] = list[i];
                     bt1.setText(selectedPlants[0].getName());
+
+                    updateArray(i);
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {
                     //Write your code if there's no result
@@ -354,8 +355,10 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
                 if(resultCode == Activity.RESULT_OK){
                     int i = data.getIntExtra("result", 0);
 
-                    selectedPlants[1] = allPlants[i];
+                    selectedPlants[1] = list[i];
                     bt2.setText(selectedPlants[1].getName());
+
+                    updateArray(i);
 
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {
@@ -365,8 +368,10 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
                 if(resultCode == Activity.RESULT_OK){
                     int i = data.getIntExtra("result", 0);
 
-                    selectedPlants[2] = allPlants[i];
+                    selectedPlants[2] = list[i];
                     bt3.setText(selectedPlants[2].getName());
+
+                    updateArray(i);
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {
                     //Write your code if there's no result
@@ -375,13 +380,27 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
                 if(resultCode == Activity.RESULT_OK){
                     int i = data.getIntExtra("result", 0);
 
-                    selectedPlants[3] = allPlants[i];
+                    selectedPlants[3] = list[i];
                     bt4.setText(selectedPlants[3].getName());
+
+                    updateArray(i);
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {
                     //Write your code if there's no result
                 }
             }
+        }
+
+        private void updateArray(int index) {
+            Plant[] temp = new Plant[list.length - 1];
+            for(int i = 0; i < index; i++){
+                temp[i] = list[i];
+            }
+            for (int i = index + 1; i < temp.length; i++) {
+                temp[i - 1] = list[i];
+            }
+
+            list = temp;
         }
     }
 
