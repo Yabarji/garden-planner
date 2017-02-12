@@ -1,20 +1,25 @@
 package net.garden.gardenplanner;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 /**
  * Created by Varun on 2017-02-11.
  */
 
-public class Garden {
+public class Garden  {
+
+    public static final String KEY = "garden";
     private boolean isIndoor;
     private int length;
     private int width;
     private boolean isPotted;
     private int numPots = 0;
     private int pH;
+    private int area;
 
-    private ArrayList<Plant> plants;
+    private Plant[] plants;
 
     public Garden(boolean isIndoor, int length, int width, boolean isPotted, int numPot, int pH) {
         this.isIndoor = isIndoor;
@@ -24,7 +29,13 @@ public class Garden {
         this.numPots = numPot;
         this.pH = pH;
 
-        plants = new ArrayList<>();
+        area = length * width;
+
+        plants = new Plant[4];
+    }
+
+    public int getArea() {
+        return area;
     }
 
     public void setNumPots(int numPots) {
@@ -67,16 +78,20 @@ public class Garden {
         isPotted = potted;
     }
 
-    public void setPlants(ArrayList<Plant> plants) {
+    public void setPlants(Plant[] plants) {
         this.plants = plants;
     }
 
-    public ArrayList<Plant> getPlants() {
+    public Plant[] getPlants() {
         return plants;
     }
 
-    public void addPlant(Plant plant) {
-        plants.add(plant);
+    @Override
+    public String toString(){
+        //Write out the object using Gson
+        Gson gson = new Gson();
+        String json = gson.toJson(this);
+        return json;
     }
 
 }

@@ -10,4 +10,42 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="net.garden.gardenplanner.ResultActivity">
 
+    <TextView
+        android:text="Labour: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/labour"
+        android:textSize="@dimen/selector_label_size"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorTextDark"/>
+
+    <TextView
+        android:text="Price: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labour"
+        android:id="@+id/price"
+        android:textSize="@dimen/selector_label_size"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorTextDark"/>
+
+    <TextView
+        android:text="Yield: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/price"
+        android:id="@+id/yield"
+        android:textSize="@dimen/selector_label_size"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorTextDark"/>
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart"
+        android:layout_below="@+id/yield"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 </RelativeLayout>

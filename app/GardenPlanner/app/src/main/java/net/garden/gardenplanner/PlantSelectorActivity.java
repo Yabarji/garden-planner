@@ -59,7 +59,15 @@ public class PlantSelectorActivity extends AppCompatActivity {
         }
         @Override
         public int getCount() {
-            return allPlants.length;
+            int counter = 0;
+
+            for(Plant p: allPlants) {
+                if (p == null) {
+                    counter++;
+                }
+            }
+
+            return allPlants.length - counter;
         }
 
         @Override

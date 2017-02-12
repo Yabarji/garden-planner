@@ -14,6 +14,14 @@ public class Plant {
     private int time;
     private int yield;
 
+    private int ID;
+    private int[] combative;
+    private int[] companion;
+
+    public int[] getCompanion() {
+        return companion;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -46,4 +54,13 @@ public class Plant {
     public int getYield() {
         return yield;
     }
+
+    public int getID() {
+        return ID;
+    }
+
+    public int[] getCombative() {
+        return combative;
+    }
+
 }

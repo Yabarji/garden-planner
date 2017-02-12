@@ -33,7 +33,7 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
 
     private static final String TAG = "PreferenceActivity";
 
-    public static Garden mGarden;
+    private static Garden mGarden;
     public static Plant[] list;
 
     /**
@@ -223,8 +223,9 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
 
         private int btn1 = 1, btn2 = 2, btn3 = 3, btn4 = 4;
 
-        Button bt1;
-        Button bt2, bt3, bt4;
+        Button bt1, bt2, bt3, bt4;
+
+        Button finish;
 
         public PlantSelectorFragment() {
             // Required empty public constructor
@@ -305,6 +306,20 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
                 }
             });
 
+            finish = (Button) view.findViewById(R.id.btnFinish);
+            finish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mGarden.setPlants(selectedPlants);
+
+                    Intent i = new Intent(getActivity().getApplicationContext(), ResultActivity.class);
+                    String garden = mGarden.toString(); //Convert to a json string
+                    i.putExtra(Garden.KEY, garden);
+                    startActivity(i);
+                }
+            });
+            finish.setClickable(false);
+
             return view;
         }
 
@@ -346,7 +361,12 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
                     selectedPlants[0] = list[i];
                     bt1.setText(selectedPlants[0].getName());
 
-                    updateArray(i);
+                    list = updateArray(i);
+                    try {
+                        list = subset(selectedPlants[0].getCombative(), list);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {
                     //Write your code if there's no result
@@ -358,7 +378,12 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
                     selectedPlants[1] = list[i];
                     bt2.setText(selectedPlants[1].getName());
 
-                    updateArray(i);
+                    list = updateArray(i);
+                    try {
+                        list = subset(selectedPlants[0].getCombative(), list);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {
@@ -371,7 +396,12 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
                     selectedPlants[2] = list[i];
                     bt3.setText(selectedPlants[2].getName());
 
-                    updateArray(i);
+                    list = updateArray(i);
+                    try {
+                        list = subset(selectedPlants[0].getCombative(), list);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {
                     //Write your code if there's no result
@@ -383,7 +413,16 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
                     selectedPlants[3] = list[i];
                     bt4.setText(selectedPlants[3].getName());
 
-                    updateArray(i);
+                    list = updateArray(i);
+                    try {
+                        list = subset(selectedPlants[0].getCombative(), list);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    finish.setVisibility(View.VISIBLE);
+                    finish.setClickable(true);
+
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {
                     //Write your code if there's no result
@@ -391,7 +430,7 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
             }
         }
 
-        private void updateArray(int index) {
+        private Plant[] updateArray(int index) {
             Plant[] temp = new Plant[list.length - 1];
             for(int i = 0; i < index; i++){
                 temp[i] = list[i];
@@ -400,7 +439,37 @@ public class PreferenceSelectorActivity extends AppCompatActivity {
                 temp[i - 1] = list[i];
             }
 
-            list = temp;
+            return temp;
+        }
+
+        private Plant[] subset(int[] com, Plant[] all) throws Exception {
+            boolean put = true;
+
+            ArrayList<Plant> filter = new ArrayList<>();
+
+            for(int i =0; i < all.length; i++)
+            {
+                for(int j=0; j < com.length; j++)
+                {
+                    if(all[i] != null) {
+                        if (all[i].getID() == com[j]) {
+                            put = false;
+                        }
+                    }
+                }
+                if(put)
+                    filter.add(all[i]);
+                put = true;
+            }
+
+            Plant[] filtered = new Plant[filter.size()];
+            for(int x = 0; x < filtered.length; x++)
+            {
+                filtered[x] = filter.get(x);
+            }
+
+            return filtered;
+
         }
     }
 
